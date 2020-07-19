@@ -16,28 +16,27 @@ spec:
 apiVersion: networking.k8s.io/v1beta1
 kind: Ingress
 metadata:
-  name: media-services
   annotations:
     kubernetes.io/ingress.class: nginx
     cert-manager.io/cluster-issuer: cert-issuer
+  name: nginx
 spec:
   tls:
     - hosts:
         - guessit.mikepham.net
       secretName: cert-secret
   rules:
-    - host: couchdb.mikepham.net
+    - host: guessit.mikepham.net
       http:
         paths:
           - backend:
-              serviceName: couchdb-svc-couchdb
-              servicePort: 5984
+              serviceName: guessit
+              servicePort: 5000
 ---
 apiVersion: v1
 kind: Service
 metadata:
   name: guessit
-  namespace: media-services
   annotations:
     external-dns.alpha.kubernetes.io/hostname: guessit.mikepham.net
   labels:
@@ -54,7 +53,6 @@ apiVersion: apps/v1
 kind: StatefulSet
 metadata:
   name: guessit
-  namespace: media-services
 spec:
   selector:
     matchLabels:

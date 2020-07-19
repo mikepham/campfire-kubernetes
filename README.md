@@ -34,18 +34,16 @@ helm install nginx-ingress nginx-stable/nginx-ingress \
   ;
 
 # Install DNS
-helm install external-dns stable/external-dns \
+helm install external-dns bitnami/external-dns \
   -f external-dns.yaml \
   ;
 
 # Install Cert Manager
 helm repo add jetstack https://charts.jetstack.io
 kubectl apply --validate=false \
-  -f https://github.com/jetstack/cert-manager/releases/download/v0.14.1/cert-manager.crds.yaml \
+  -f https://github.com/jetstack/cert-manager/releases/download/v0.15.2/cert-manager.crds.yaml \
   ;
-helm install cert-manager jetstack/cert-manager \
-  --version v0.14.1 \
-  ;
+helm install cert-manager jetstack/cert-manager --version v0.15.2
 ```
 
 ### Delete the Cluster
